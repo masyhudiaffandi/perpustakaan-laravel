@@ -13,10 +13,6 @@ class BukuController extends Controller
         return view('welcome', compact('books'));
     }
 
-    public function create() {
-        return view('buku.create');
-    }
-
     public function store(Request $request) {
         $request->validate([
             'title' => 'required',
@@ -32,4 +28,36 @@ class BukuController extends Controller
 
         return redirect('/');
     }
+
+    public function edit($id) {
+        $book = buku::findOrFail($id);
+
+        return view('edit', compact('book'));
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'title' => 'required',
+            'author' => 'required',
+            'year' => 'required',
+        ]);
+
+        $book = buku::findOrFail($id);
+
+        $book->update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'year' => $request->year,
+        ]);
+
+        return redirect()->route('bukus.index')->with('success', 'Book updated successfully');
+    }
+
+    public function destroy($id) {
+        $book = buku::findOrFail($id);
+        $book->delete();
+
+        return redirect()->route('bukus.index')->with('success', 'Book deleted successfully');
+    }
+
 }

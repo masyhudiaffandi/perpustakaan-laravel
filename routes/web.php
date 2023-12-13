@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [BukuController::class, 'index']);
+Route::get('/', [BukuController::class, 'index'])->name('bukus.index');
 
-Route::get('/create', [BukuController::class, 'create']);
+Route::post('/store', [BukuController::class, 'store'])->name('bukus.store');
 
-Route::post('/buku', [BukuController::class, 'store']);
+Route::get('/edit/{id}', [BukuController::class, 'edit'])->name('bukus.edit');
+
+Route::put('/update/{id}', [BukuController::class, 'update'])->name('bukus.update');
+
+Route::delete('/destroy/{id}', [BukuController::class, 'destroy'])->name('bukus.destroy');

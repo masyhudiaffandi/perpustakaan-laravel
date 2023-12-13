@@ -15,5 +15,8 @@ class buku extends Model
         'year',
     ];
 
+    public $incremeting = true;
+
+
 }
 
